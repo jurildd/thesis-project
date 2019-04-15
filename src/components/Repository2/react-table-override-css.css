@@ -1,0 +1,82 @@
+.sort-direction {
+    display: inline-block;
+    height: 0;
+    margin: 0 0 2px 5px;
+    width: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+
+.asc {
+    border-bottom: 5px solid #8C8C8C;
+}
+
+.desc {
+    border-top: 5px solid #8C8C8C;
+}
+
+.sortable {
+    cursor: pointer
+}
+
+td {
+    border-style: none;
+    border-width: 0;
+    
+}
+
+table {
+    border-spacing: 0 20px;
+}
+
+.round {
+    border-collapse: collapse;
+    border-radius: 15px !important;
+    border-style: hidden; /* hide standard table (collapsed) border */
+    /* background-color: white; */
+     
+    /* border-collapse: separate; */
+}
+
+.br-l {
+    border-radius: 15px 0 0 15px !important;
+    border-right-style: none !important;
+    /* overflow: hidden; */
+}
+
+.br-r {
+    border-radius: 0 15px 15px 0 !important;
+    border-right-style: none !important;
+}
+
+.header {
+    color: #8C8C8C;
+}
+
+.ccolor {
+    font-weight: 600;
+    color: #707070;
+}
+
+.mw9 {
+    max-width: 90rem !important;
+}
+
+.cmt6 {
+    margin-top: 6rem;
+}
+
+.shadow-5 {
+    box-shadow:4px 0px 8px 0px rgba( 0, 0, 0, 0.2 )
+}
+
+.react-table input {
+    border-collapse: collapse;
+    border-radius: 8px !important;
+    border-style: hidden; /* hide standard table (collapsed) border */
+    padding: 8px 7px !important; 
+}
+
+.rt-resizer {
+    display: none !important;
+}
