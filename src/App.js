@@ -8,8 +8,10 @@ import Repository2 from './components/Repository2/Repository2';
 import Search from './components/Search/Search';
 // import Filters from './components/Filters/Filters';
 // import Upload from './components/Upload/Upload';
+import RepoClick from './components/RepoClick/RepoClick';
 import './App.css';
 import './components/Repository/index.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 
 class App extends Component {
@@ -147,48 +149,98 @@ class App extends Component {
   render() {
     const {isSignedIn, route} = this.state
     return (
-      <div className="App">
-        {route === 'home' || route === 'signout' 
-          ? <div> 
-              <div>
-                <Navigation 
-                  isSignedIn={isSignedIn} 
-                  onRouteChange={this.onRouteChange} 
-                  name={this.state.user.name}
+      <BrowserRouter>
+        <div>
+          <Navigation 
+            isSignedIn={isSignedIn} 
+            onRouteChange={this.onRouteChange} 
+            name={this.state.user.name}
+          />
+          <Switch>
+            <Route exact path="/" render={() => (
+              <Repository2 
+                dbInput={this.state.dbInput} 
+                sortBy={this.sortBy}
+                setArrow={this.setArrow}
+              />
+            )}/>
+            <Route exact path="/repository" render={() => (
+              <Repository2 
+                dbInput={this.state.dbInput} 
+                sortBy={this.sortBy}
+                setArrow={this.setArrow}
+              />
+            )}/>
+            <Route exact path="/repository/:id" render={({match}) => (
+              <RepoClick
+                match = {match}
+                dbInput={this.state.dbInput}
                 />
-              </div>
-              {/* <div>
-                <Search 
-                  dbInput={this.state.dbInput} 
-                  />
-              </div> */}
-              <div>
-                {/* <Repository 
-                  dbInput={this.state.dbInput} 
-                  sortBy={this.sortBy}
-                  setArrow={this.setArrow}
-                /> */}
-                <Repository2
-                  dbInput={this.state.dbInput} 
-                  sortBy={this.sortBy}
-                  setArrow={this.setArrow}
-                />
-              </div>
-              {
-              /* <div></div> */
-              /* <Filters/>
-                <Upload/> */
-              }
-            </div>
-            : (
-              route === 'signin'
-              ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-              : (<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-              )
-            )
-        }
-      </div>
+            )}/>
+            <Route exact path="/signin" render={() => (
+              <Signin 
+                loadUser={this.loadUser} 
+                onRouteChange={this.onRouteChange}
+              />
+            )}/>
+            <Route exact path="/register" render={() => (
+              <Signin 
+                loadUser={this.loadUser} 
+                onRouteChange={this.onRouteChange}
+              />
+            )}/>
+              
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
+
+    // return (
+    //   <div className="App">
+    //     {route === 'home' || route === 'signout' 
+    //       ? <div> 
+    //           <div>
+    //             <Navigation 
+    //               isSignedIn={isSignedIn} 
+    //               onRouteChange={this.onRouteChange} 
+    //               name={this.state.user.name}
+    //             />
+    //           </div>
+    //           {/* <div>
+    //             <Search 
+    //               dbInput={this.state.dbInput} 
+    //               />
+    //           </div> */}
+    //           <div>
+    //             {/* <Repository 
+    //               dbInput={this.state.dbInput} 
+    //               sortBy={this.sortBy}
+    //               setArrow={this.setArrow}
+    //             /> */}
+    //             <Repository2
+    //               dbInput={this.state.dbInput} 
+    //               sortBy={this.sortBy}
+    //               setArrow={this.setArrow}
+    //             />
+    //           </div>
+    //           {route === 'repoID'
+    //           ? <RepoClick/>
+    //           : 
+    //           }
+    //           /* <div></div> */
+    //           /* <Filters/>
+    //             <Upload/> */
+    //           }
+    //         </div>
+    //         : (
+    //           route === 'signin'
+    //           ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+    //           : (<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+    //           )
+    //         )
+    //     }
+    //   </div>
+    // );
   }
 }
 

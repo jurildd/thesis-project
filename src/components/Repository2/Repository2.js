@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import "./react-table-override-css.css";
+import {Route} from 'react-router-dom';
 
 class Repository2 extends React.Component {
     constructor(props) {
@@ -35,42 +36,65 @@ class Repository2 extends React.Component {
     };
 
     render() {
-        const columns = [
-            {
-                Header: "Title",
-                accessor: "title"
-            },
-            {
-                Header: "Department",
-                accessor: "department"
-            },
-            {
-                Header: "Category",
-                accessor: "category"
-            },
-            {
-                Header: "Author",
-                accessor: "author"
-            },
-            {
-                Header: "Availability",
-                accessor: "availability",
-                filterable: false
-            },
-            {
-                Header: "Link",
-                accessor: "link",
-                sortable: false,
-                filterable: false
+        const getColumnWidth = (data, accessor, headerText) => {
+            if (typeof accessor === 'string' || accessor instanceof String) {
+              accessor = d => d[accessor]; // eslint-disable-line no-param-reassign
             }
-        ]
+            const maxWidth = 600;
+            const magicSpacing = 80;
+            const cellLength = Math.max(
+              ...data.map(row => (`${accessor(row)}` || '').length),
+              headerText.length,
+            );
+            return Math.min(maxWidth, cellLength * magicSpacing);
+        };
         return (
             <ReactTable
-                columns={columns}
-                className='react-table'
                 data={this.props.dbInput}
+                columns={[
+                    {
+                        Header: "id",
+                        accessor: "id",
+                        show: false
+                    },
+                    {
+                        Header: "Title",
+                        accessor: "title",
+                        width: getColumnWidth(this.props.dbInput,'accessor', "Title"),
+                        style:{ 'white-space': 'unset'}
+                    },
+                    {
+                        Header: "Department",
+                        accessor: "department",
+                        style: {'text-align': 'center'}
+                    },
+                    {
+                        Header: "Category",
+                        accessor: "category",
+                        style: {'text-align': 'center'}
+                    },
+                    {
+                        Header: "Author",
+                        accessor: "author",
+                        style: {'text-align': 'center'}
+                    },
+                    {
+                        Header: "Availability",
+                        accessor: "availability",
+                        filterable: false,
+                        style: {'text-align': 'center'}
+                    },
+                    {
+                        Header: "Link",
+                        accessor: "link",
+                        sortable: false,
+                        filterable: false,
+                        style: {'text-align': 'center'}
+                    }
+                ]}
+                className='react-table' 
                 filterable
-                resizable={false}
+                resizable={true}
                 filtered={this.state.filtered}
                 onFilteredChange={(filtered, column, value) => {
                     this.onFilteredChangeCustom(value, column.id || column.accessor);
@@ -123,6 +147,20 @@ class Repository2 extends React.Component {
                     return {
                         className: "fw6 mw9 center header"
                     }
+                }}
+                getTrProps={(state, rowInfo, column, instance) => {
+                    return {
+                        // <Route render={({history}) => {
+                        //     onClick={() => history.push('repository/' + rowInfo.row.id)}    
+                        // }}
+                        onClick: e => {
+                            window.location.href = "repository/" + rowInfo.row.id
+                            // console.log(rowInfo.row.id)
+                        },
+                        style: {'cursor': 'pointer'}
+                        
+                    }
+                    
                 }}
                 
             >

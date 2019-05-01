@@ -4,7 +4,6 @@ import './Search.css';
 class Search extends React.Component {
     constructor(props) {
         super();
-        
     }
 
     updateSearch(event) {
